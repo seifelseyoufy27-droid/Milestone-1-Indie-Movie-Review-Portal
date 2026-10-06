@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Films - CineScope Independent</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+  <nav class="navbar" aria-label="Main menu">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="index.html" class="navbar-brand logo d-inline-flex align-items-center"><img src="images/logo.jpeg" alt="" class="logo-icon">CineScope</a>
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse w-100" id="mainMenu">
+        <ul class="navbar-nav ms-auto text-end">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link active" aria-current="page" href="films.html">Films</a></li>
+          <li class="nav-item"><a class="nav-link" href="review.html">Write a review</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <main class="container">
+  <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Films</li>
+    </ol>
+  </nav>
+  <section class="intro">
+    <h1>All films</h1>
+    <p>Every film is rated out of 5 stars. Click a film to see its cast and reviews.</p>
+
+    <div class="mt-3" style="max-width: 400px;">
+      <label for="search" class="form-label">Search films</label>
+      <input type="search" id="search" class="form-control" placeholder="Type a title or year">
+    </div>
+  </section>
+
+  <section aria-label="Film list">
+    <div class="row g-4" id="film-list">
+      <div class="col-sm-6 col-lg-4">
+        <a href="desert-sun.html" class="card-link">
+          <article class="film-card">
+            <img src="images/desert-sun.jpeg" alt="Poster for Desert Sun" class="card-poster">
+            <div class="p-3">
+              <h3 class="h5 mb-1">Desert Sun</h3>
+              <p class="details mb-1">2025</p>
+              <span class="stars" style="--rating: 5.0" aria-hidden="true"></span>
+              <span class="badge rating-badge"><span class="visually-hidden">Rated </span>5.0 / 5</span>
+            </div>
+          </article>
+        </a>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <a href="midnight-run.html" class="card-link">
+          <article class="film-card">
+            <img src="images/midnight-run.jpeg" alt="Poster for Midnight Run" class="card-poster">
+            <div class="p-3">
+              <h3 class="h5 mb-1">Midnight Run</h3>
+              <p class="details mb-1">2026</p>
+              <span class="stars" style="--rating: 3.75" aria-hidden="true"></span>
+              <span class="badge rating-badge"><span class="visually-hidden">Rated </span>3.8 / 5</span>
+            </div>
+          </article>
+        </a>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <a href="neon-city.html" class="card-link">
+          <article class="film-card">
+            <img src="images/neon-city.jpeg" alt="Poster for The Neon City" class="card-poster">
+            <div class="p-3">
+              <h3 class="h5 mb-1">The Neon City</h3>
+              <p class="details mb-1">2026</p>
+              <span class="stars" style="--rating: 4.5" aria-hidden="true"></span>
+              <span class="badge rating-badge"><span class="visually-hidden">Rated </span>4.5 / 5</span>
+            </div>
+          </article>
+        </a>
+      </div>
+    </div>
+
+    <p id="no-results" class="details mt-3 d-none">No films match your search.</p>
+  </section>
+</main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="mb-0">CineScope Independent - reviews of independent films</p>
+    </div>
+  </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const searchBox = document.getElementById('search');
+  const films = document.querySelectorAll('#film-list > div');
+  const noResults = document.getElementById('no-results');
+
+  searchBox.addEventListener('input', function () {
+    const text = searchBox.value.toLowerCase().trim();
+    let shown = 0;
+
+    films.forEach(function (film) {
+      const title = film.querySelector('h3').textContent.toLowerCase();
+      const year = film.querySelector('.details').textContent;
+      const match = title.includes(text) || year.includes(text);
+
+      film.classList.toggle('d-none', !match);
+      if (match) shown++;
+    });
+
+    noResults.classList.toggle('d-none', shown > 0);
+  });
+
+  // Run a search sent from the header search bar (films.html?q=...)
+  const query = new URLSearchParams(window.location.search).get('q');
+  if (query) {
+    searchBox.value = query;
+    searchBox.dispatchEvent(new Event('input'));
+  }
+</script>
+</body>
+</html>
